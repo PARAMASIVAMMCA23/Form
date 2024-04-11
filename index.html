@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Form</title>
+    <script>
+        function toggle(inputId, buttonId) {
+            var password = document.getElementById(inputId);
+            var toggle = document.getElementById(buttonId);
+        
+            if (password.type === "password") {
+                password.type = "text";
+                toggle.textContent = "Hide";
+            } else {
+                password.type = "password";
+                toggle.textContent = "Show";
+            }
+        }
+        
+        function add(e) {
+            var firstName = document.getElementById("firstName").value;
+            var lastName = document.getElementById("lastName").value;
+            var email = document.getElementById("email").value;
+            var dob = document.getElementById("dob").value;
+            var gender = document.getElementById("gender").value;
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+            var terms = document.getElementById("terms").checked;
+
+            // Clear previous error messages
+            document.getElementById("firstNameError").textContent = "";
+            document.getElementById("lastNameError").textContent = "";
+            document.getElementById("emailError").textContent = "";
+            document.getElementById("dobError").textContent = "";
+            document.getElementById("genderError").textContent = "";
+            document.getElementById("passwordError").textContent = "";
+            document.getElementById("confirmPasswordError").textContent = "";
+            document.getElementById("termsError").textContent = "";
+
+            if (firstName === "") {
+                document.getElementById("firstNameError").textContent = "Please enter your first name";
+                return false;
+            }
+            
+            if (lastName === "") {
+                document.getElementById("lastNameError").textContent = "Please enter your last name";
+                return false;
+            }
+            
+            if (email === "") {
+                document.getElementById("emailError").textContent = "Please enter your email";
+                return false;
+            }
+            
+            if (dob === "") {
+                document.getElementById("dobError").textContent = "Please enter your date of birth";
+                return false;
+            }
+            
+            if (gender === "") {
+                document.getElementById("genderError").textContent = "Please select your gender";
+                return false;
+            }
+            
+            if (password === "") {
+                document.getElementById("passwordError").textContent = "Please enter a password";
+                return false;
+            }
+            
+            if (confirmPassword === "") {
+                document.getElementById("confirmPasswordError").textContent = "Please confirm your password";
+                return false;
+            }
+            
+            if (password !== confirmPassword) {
+                document.getElementById("confirmPasswordError").textContent = "Password and Confirm Password do not match";
+                return false;
+            }
+
+            if (!terms) {
+                document.getElementById("termsError").textContent = "Please agree to the terms and conditions";
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <div class="body">
+        <h1>Registration Form</h1>
+        <form action="http://localhost:3000/submit-form" method="post" onsubmit="return add(event)">
+
+            <div class="form">
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName" placeholder="Enter First Name" >
+                <span id="firstNameError" class="error"></span><br><br>
+
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName" placeholder="Enter Last Name" >
+                <span id="lastNameError" class="error"></span><br><br>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter Email" >
+                <span id="emailError" class="error"></span><br><br>
+
+                <label for="dob">Date Of Birth:</label>
+                <input type="date" id="dob" name="dob" >
+                <span id="dobError" class="error"></span><br><br>
+
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" >
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+                <span id="genderError" class="error"></span><br><br>
+
+                <label for="password">Password :</label>
+                <input type="password" id="password" name="password" placeholder="Password" minlength="8"
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=\-+]).{8,16}$" >
+                <button type="button" onclick="toggle('password', 'togglePassword')"> <i class="fas fa-eye"></i></button><br><br>
+                <span id="passwordError" class="error"></span><br><br>
+
+                <label for="confirmPassword">Confirm Password :</label> 
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" minlength="8"
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=\-+]).{8,16}$"
+               >
+                <button type="button" onclick="toggle('confirmPassword', 'toggleConfirmPassword')"> <i class="fas fa-eye"></i></button>
+                <br><br>
+                <span id="confirmPasswordError" class="error"></span><br><br>
+
+                <label for="terms">Terms and Conditions</label>
+                <input type="checkbox" id="terms" name="terms">
+                <span id="termsError" class="error"></span><br><br>
+
+                <button class="submit" type="submit">Register</button>
+            </div>
+        </form>
+    </div>   
+</body>
+</html>
